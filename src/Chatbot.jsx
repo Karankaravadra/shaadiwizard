@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import VoiceHandler from "./VoiceHandler.js";
-import GoogleSheet from "./GoogleSheet.js";
+import { sendToGoogleSheet } from "./GoogleSheet.js";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
