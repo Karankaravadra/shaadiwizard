@@ -13,7 +13,7 @@ function Chatbot() {
     setMessages((prev) => [...prev, newMsg]);
     if (user) {
       VoiceHandler.speak("Let me think...");
-      GoogleSheet.send({ message: msg }).catch(console.error);
+      sendToGoogleSheet({ message: msg }).catch(console.error);
       setTimeout(() => {
         const reply = `You said: "${msg}". How many guests would you like to invite?`;
         sendMessage(reply, false);
