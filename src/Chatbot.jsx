@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import VoiceHandler from "./VoiceHandler.js";
-//import GoogleSheet from "./GoogleSheet.js";
+import GoogleSheet from "./GoogleSheet.js";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -13,7 +13,7 @@ function Chatbot() {
     setMessages((prev) => [...prev, newMsg]);
     if (user) {
       VoiceHandler.speak("Let me think...");
-     // GoogleSheet.send({ message: msg }).catch(console.error);
+      GoogleSheet.send({ message: msg }).catch(console.error);
       setTimeout(() => {
         const reply = `You said: "${msg}". How many guests would you like to invite?`;
         sendMessage(reply, false);
