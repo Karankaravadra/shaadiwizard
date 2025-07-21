@@ -1,6 +1,6 @@
-import React from 'react';
-import Chatbot from './Chatbot';
-import './styles.css';
+import React from "react";
+import Chatbot from "./Chatbot.jsx";
+import "./styles.css";
 
 function App() {
   return (
@@ -9,5 +9,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

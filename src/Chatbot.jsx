@@ -1,34 +1,51 @@
-import React, { useState } from 'react';
-import VoiceHandler from './VoiceHandler';
-import EmailHandler from './EmailHandler';
+import React, { useState } from "react";
+import VoiceHandler from "./VoiceHandler.js";
+import GoogleSheet from "./GoogleSheet.js";
 
 function Chatbot() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState([
+    { text: "Namaste! I'm ShaadiWizard 🤗", user: false },
+  ]);
+  const [input, setInput] = useState("");
 
-  const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { text: input, sender: 'user' }]);
-      VoiceHandler.speak("Thank you! We received: " + input);
-      EmailHandler.send({ message: input });
-      setInput('');
+  const sendMessage = (msg, user = true) => {
+    const newMsg = { text: msg, user };
+    setMessages((prev) => [...prev, newMsg]);
+    if (user) {
+      VoiceHandler.speak("Let me think...");
+      GoogleSheet.send({ message: msg }).catch(console.error);
+      setTimeout(() => {
+        const reply = `You said: "${msg}". How many guests would you like to invite?`;
+        sendMessage(reply, false);
+      }, 800);
     }
   };
 
   return (
-    <div className="chatbot-window">
-      <h2>🧙‍♂️ ShaadiWizard</h2>
-      <div className="messages">
-        {messages.map((msg, i) => (
-          <div key={i} className={msg.sender === 'user' ? 'user-msg' : 'bot-msg'}>
-            {msg.text}
+    <div className="chatbot">
+      <div className="chat-window">
+        {messages.map((m, i) => (
+          <div key={i} className={m.user ? "msg user" : "msg bot"}>
+            {m.text}
           </div>
         ))}
       </div>
-      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type your wedding plan..." />
-      <button onClick={handleSend}>Send</button>
+      <div className="input-area">
+        <button onClick={() => VoiceHandler.start((text) => sendMessage(text))}>
+          🎙
+        </button>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your wedding plan..."
+        />
+        <button onClick={() => { sendMessage(input); setInput(""); }}>
+          Send
+        </button>
+      </div>
     </div>
   );
 }
 
 export default Chatbot;
+

@@ -1,9 +1,15 @@
 const VoiceHandler = {
+  start: (callback) => {
+    const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    rec.lang = navigator.language || "en-IN";
+    rec.onresult = (e) => callback(e.results[0][0].transcript);
+    rec.start();
+  },
   speak: (text) => {
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.pitch = 2;
-    msg.rate = 1.3;
-    speechSynthesis.speak(msg);
-  }
+    const ut = new SpeechSynthesisUtterance(text);
+    ut.pitch = 2.0;
+    ut.rate = 1.2;
+    speechSynthesis.speak(ut);
+  },
 };
 export default VoiceHandler;
