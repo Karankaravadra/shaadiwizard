@@ -1,4 +1,4 @@
-export const sendTogooglesheet = async (data) => {
+/*export const sendTogooglesheet = async (data) => {
   try {
     console.log("Simulating sending data to google sheets:");
     console.log("Data:", data);
@@ -9,4 +9,4 @@ export const sendTogooglesheet = async (data) => {
     console.error("Temporary googlesheet logger failed:", error);
     return { success: false, error };
   }
-};
+};*/
