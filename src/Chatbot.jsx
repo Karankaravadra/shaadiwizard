@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import VoiceHandler from "./VoiceHandler.js";
-//import { sendToGoogleSheet } from "./GoogleSheet.js";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -11,9 +10,12 @@ function Chatbot() {
   const sendMessage = (msg, user = true) => {
     const newMsg = { text: msg, user };
     setMessages((prev) => [...prev, newMsg]);
+
     if (user) {
       VoiceHandler.speak("Let me think...");
-      //sendToGoogleSheet({ message: msg }).catch(console.error);
+
+      // Skipping GoogleSheet logging here
+
       setTimeout(() => {
         const reply = `You said: "${msg}". How many guests would you like to invite?`;
         sendMessage(reply, false);
@@ -39,7 +41,12 @@ function Chatbot() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your wedding plan..."
         />
-        <button onClick={() => { sendMessage(input); setInput(""); }}>
+        <button
+          onClick={() => {
+            sendMessage(input);
+            setInput("");
+          }}
+        >
           Send
         </button>
       </div>
@@ -48,4 +55,3 @@ function Chatbot() {
 }
 
 export default Chatbot;
-
